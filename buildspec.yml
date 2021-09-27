@@ -12,7 +12,6 @@ phases:
   pre_build:
     commands:
       - echo Nothing to do in the pre_build phase.
-      - cd java-tomcat-sample
       - chmod 777 launch_template.sh
       - bash launch_template.sh $env_name
 
