@@ -34,5 +34,5 @@ phases:
       - echo Build completed on `date`
 artifacts:
   files:
-    - 'java-tomcat-sample/appspec.yml'
+    - 'appspec.yml'
     - '**/*.war'
