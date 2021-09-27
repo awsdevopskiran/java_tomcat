@@ -6,4 +6,4 @@ files:
     
 hooks:
   BeforeInstall:
-    - location: Scripts/Unzip.sh
+    - location: Scripts/unzip.sh
