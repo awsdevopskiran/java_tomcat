@@ -4,6 +4,6 @@ files:
   - source: /
     destination: /opt/apache-tomcat-9.0.35/webapps/
     
-hooks:
-  BeforeInstall:
-    - location: Scripts/unzip.sh
+# hooks:
+#   BeforeInstall:
+#     - location: Scripts/unzip.sh
