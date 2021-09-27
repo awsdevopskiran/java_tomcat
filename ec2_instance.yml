@@ -1,0 +1,64 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: --- deploy stack
+
+Parameters: 
+  env:
+    Description: dev/qa/prod
+    Type: String
+  AZ:
+    Description: select AZ
+    Type: AWS::EC2::AvailabilityZone::Name
+    Default: us-east-1a
+  image: 
+    Type: 'AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>'
+    Default: amazon-linux
+  instancetype:
+    Description: select instance type
+    Type: String
+    Default: t2.micro
+  keyname:
+    Description: select key
+    Type: AWS::EC2::KeyPair::KeyName
+    Default: awskey2
+  SG:
+    Description: select SG
+    Type: AWS::EC2::SecurityGroup::GroupName
+    Default: SG1
+
+Resources: 
+  ec2instance:
+    Type: AWS::EC2::Instance
+    Properties: 
+      AvailabilityZone: !Ref AZ
+      ImageId: !Ref image
+      InstanceType: !Ref instancetype
+      KeyName: !Ref keyname
+      SecurityGroups: 
+        - !Ref SG
+      Tags: 
+        - Key: Name
+          Value: !Join ["-", [ !Ref env,!Ref AWS::StackName]]
+      UserData:
+        Fn::Base64:
+            !Sub |
+              #!/bin/bash
+              sudo yum update -y
+              sudo hostnamectl set-hostname tomcat.example.com
+              sudo yum install java-1.8.0 -y
+              cd /opt/
+              sudo wget https://archive.apache.org/dist/tomcat/tomcat-9/v9.0.35/bin/apache-tomcat-9.0.35.tar.gz
+              sudo tar -zvxf apache-tomcat-9.0.35.tar.gz
+              sudo ls -ltr /opt/apache-tomcat-9.0.35/bin
+              sudo cd /opt/apache-tomcat-9.0.35/bin
+              sudo chmod +x /opt/apache-tomcat-9.0.35/bin/startup.sh
+              sudo chmod +x /opt/apache-tomcat-9.0.35/bin/shutdown.sh
+              sudo ln -s /opt/apache-tomcat-9.0.35/bin/startup.sh /usr/bin/tomcatup
+              sudo ln -s /opt/apache-tomcat-9.0.35/bin/shutdown.sh /usr/bin/tomcatdown
+              sudo tomcatup
+              sudo yum install ruby -y
+              sudo yum install wget -y
+              wget https://aws-codedeploy-us-east-1.s3.amazonaws.com/latest/install
+              chmod +x ./install
+              sudo ./install auto
+              sudo systemctl start codedeploy-agent
+              sudo systemctl restart codedeploy-agent

@@ -1,0 +1,39 @@
+version: 0.2
+
+env:
+  variables:
+    env_name: "$1"
+
+phases:
+  install:
+    runtime-versions:
+      java: corretto11
+#       docker: 18
+  pre_build:
+    commands:
+      - echo Nothing to do in the pre_build phase.
+      - cd java-tomcat-sample
+      - chmod 777 launch_template.sh
+      - bash launch_template.sh $env_name
+
+      
+  build:
+    commands:
+      - echo Build started on `date`
+      - pwd
+      - mvn clean install
+      - ls
+#       - docker build -t docker-apache2 .
+#       - aws ecr create-repository --repository-name docker-testing --region us-east-1
+#       - docker tag docker-apache2 067663653687.dkr.ecr.us-east-1.amazonaws.com/docker-testing
+#       - aws ecr get-login-password | docker login --username AWS --password-stdin 067663653687.dkr.ecr.us-east-1.amazonaws.com
+#       - docker push 067663653687.dkr.ecr.us-east-1.amazonaws.com/docker-testing
+
+
+  post_build:
+    commands:
+      - echo Build completed on `date`
+artifacts:
+  files:
+    - 'java-tomcat-sample/appspec.yml'
+    - '**/*.war'
