@@ -8,12 +8,12 @@ phases:
   install:
     runtime-versions:
       java: corretto11
-#       docker: 18
+      docker: 18
   pre_build:
     commands:
       - echo Nothing to do in the pre_build phase.
-      - chmod 777 launch_template.sh
-      - bash launch_template.sh $env_name
+#       - chmod 777 launch_template.sh
+#       - bash launch_template.sh $env_name
 
       
   build:
