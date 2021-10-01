@@ -3,9 +3,9 @@ pipeline{
     tools {
         maven 'Maven_local'
     }
-    environment {
-        secret = credentials('25e36035-6033-4a89-974d-f9d56dbd8344')
-    }
+//     environment {
+//         secret = credentials('25e36035-6033-4a89-974d-f9d56dbd8344')
+//     }
     stages {
         stage('pre-build') {
             steps {
