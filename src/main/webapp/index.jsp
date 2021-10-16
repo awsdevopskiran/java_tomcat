@@ -6,6 +6,6 @@
 <h4>This is index.jsp file for java-tomcat-sample context path-1</h4>
 <h2>This is created on Feb 2021</h2>
 <h2>This is created on 21st Aug 2021</h2>
-<h2>This is created on 16th Oct 2021</h2>
+<h2>This is created on 16th October 2021</h2>
 </body>
 </html>
