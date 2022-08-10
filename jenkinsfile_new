@@ -1,0 +1,48 @@
+pipeline {
+    agent any
+    tools {
+      maven 'maven_local'
+    }
+
+    stages {
+        stage('git_clone') {
+            steps {
+                git branch: 'main', credentialsId: '7be6ddac-38f5-4486-97f0-31740fb7e6b7', url: 'https://github.com/rushikeshsawant143/java_tomcat.git'
+            }
+        }
+        
+        stage('build_job') {
+            steps {
+                sh 'mvn clean install'
+            }
+        }
+        
+        stage('Build_Docker_image') {
+            steps {
+                sh 'docker build -t tomcat-image-v1.1 .'
+                sh 'docker tag tomcat-image-v1.1 rushikeshsawant143/test1:tomcat-image-v1.1'
+            }
+        }
+        
+        stage('docker_push') {
+            steps {
+                withCredentials([string(credentialsId: 'c1191cf2-4229-4ce2-8552-cf780da7f5fb', variable: 'docker_pwd')]) {
+                    sh 'docker login -u rushikeshsawant143 -p ${docker_pwd}'
+                    sh 'docker push rushikeshsawant143/test1:tomcat-image-v1.1'
+                }
+            }
+        }
+        
+        // stage('deploy_job') {
+        //     steps {
+        //         deploy adapters: [tomcat9(credentialsId: 'ecc686d3-78a9-4f18-a43e-34808b28d80a', path: '', url: 'http://3.91.215.134:8080/')], contextPath: '/test', onFailure: false, war: '**/*.war'
+        //     }
+        // }
+    }
+    post {
+      always {
+        sh 'docker logout'
+        archiveArtifacts artifacts: '**/*.war', followSymlinks: false
+      }
+    }
+}
