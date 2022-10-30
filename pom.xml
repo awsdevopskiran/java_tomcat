@@ -43,9 +43,9 @@
   </build>
  <repositories>
       <repository>
-        <id>visualpath-vprofile-repo</id>
-        <name>visualpath-vprofile-repo</name>
-    <url>https://visualpath-921877814580.d.codeartifact.us-east-1.amazonaws.com/maven/vprofile-repo/</url>
+        <id>visualpath-maven-central-store</id>
+        <name>visualpath-maven-central-store</name>
+    <url>https://visualpath-921877814580.d.codeartifact.us-east-1.amazonaws.com/maven/maven-central-store/</url>
       </repository>
     </repositories>
 </project>
