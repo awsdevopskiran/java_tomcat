@@ -1,4 +1,7 @@
+# FROM tomcat:latest
+# COPY target/*.war /usr/local/tomcat/webapps/
+# EXPOSE 8080
+# CMD ["catalina.sh", "run"]
+
 FROM tomcat:latest
-COPY target/*.war /usr/local/tomcat/webapps/
-EXPOSE 8080
-CMD ["catalina.sh", "run"]
+COPY ./*.war /usr/local/tomcat/webapps/
