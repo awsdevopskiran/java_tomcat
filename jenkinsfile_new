@@ -20,7 +20,7 @@ pipeline {
         stage('Build_Docker_image') {
             steps {
                 sh 'docker build -t tomcat-image-v1.1 .'
-                sh 'docker tag tomcat-image-v1.1 rushikeshsawant143/test1:tomcat-image-v1.1'
+                // sh 'docker tag tomcat-image-v1.1 rushikeshsawant143/test1:tomcat-image-v1.1'
             }
         }
         
