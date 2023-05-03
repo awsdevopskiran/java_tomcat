@@ -1,7 +1,7 @@
 pipeline {
     agent any
     tools {
-      maven 'maven_local'
+      maven 'Maven_local'
     }
 
     stages {
@@ -24,14 +24,14 @@ pipeline {
             }
         }
         
-        stage('docker_push') {
-            steps {
-                withCredentials([string(credentialsId: 'c1191cf2-4229-4ce2-8552-cf780da7f5fb', variable: 'docker_pwd')]) {
-                    sh 'docker login -u rushikeshsawant143 -p ${docker_pwd}'
-                    sh 'docker push rushikeshsawant143/test1:tomcat-image-v1.1'
-                }
-            }
-        }
+        // stage('docker_push') {
+        //     steps {
+        //         withCredentials([string(credentialsId: 'c1191cf2-4229-4ce2-8552-cf780da7f5fb', variable: 'docker_pwd')]) {
+        //             sh 'docker login -u rushikeshsawant143 -p ${docker_pwd}'
+        //             sh 'docker push rushikeshsawant143/test1:tomcat-image-v1.1'
+        //         }
+        //     }
+        // }
         
         // stage('deploy_job') {
         //     steps {
@@ -39,10 +39,10 @@ pipeline {
         //     }
         // }
     }
-    post {
-      always {
-        sh 'docker logout'
-        archiveArtifacts artifacts: '**/*.war', followSymlinks: false
-      }
-    }
+    // post {
+    //   always {
+    //     sh 'docker logout'
+    //     archiveArtifacts artifacts: '**/*.war', followSymlinks: false
+    //   }
+    // }
 }
